@@ -91,6 +91,21 @@
                 opacity: 1;
             }
         }
+
+        .bak {
+            background-image: url('img/Group 160 (2).png');
+            /* Gambar untuk desktop */
+            background-size: cover;
+            background-position: center;
+        }
+
+        /* [TETAP SAMA] Media query untuk mengubah gambar di layar kecil */
+        @media (max-width: 640px) {
+            .bak {
+                background-image: url('img/Group\ 160\ \(1\).png');
+                /* Gambar untuk HP */
+            }
+        }
     </style>
 </head>
 
@@ -209,8 +224,8 @@
             <main
                 class="w-full flex-grow h-[350px] sm:h-[450px] md:h-[550px] relative animate__animated animate__fadeInUp">
 
-                <div class="w-full md:w-210 h-full bg-[#eaf4ff] rounded-xl border border-slate-200 shadow-sm overflow-hidden"
-                    style="background-image: url(img/Group\ 160\ \(2\).png); background-size: cover; background-position: center;">
+                <div
+                    class="bak w-full md:w-210 h-full bg-[#eaf4ff] rounded-xl border border-slate-200 shadow-sm overflow-hidden">
 
                     <header class="bg-white flex items-center p-4 gap-3 border-b border-slate-200">
                         <img src="img/Head.png" alt="Author Avatar"
