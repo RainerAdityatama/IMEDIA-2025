@@ -197,69 +197,118 @@ document.addEventListener('DOMContentLoaded', () => {
 document.addEventListener('DOMContentLoaded', () => {
     const viewport = document.getElementById('carousel-viewport');
     const track = document.getElementById('carousel-track');
-    if (!track) return; // Exit if the track isn't found
+    const prevButton = document.getElementById('prev-button');
+    const nextButton = document.getElementById('next-button');
+
+    if (!track || !prevButton || !nextButton) {
+        console.error('Carousel elements not found!');
+        return;
+    }
 
     let items = Array.from(track.children);
     const originalItemCount = items.length;
-    let currentIndex = 0;
-    let slideInterval;
+    let isMoving = false;
 
-    // --- Carousel Configuration ---
-    const slideDuration = 3000; // Time in ms for each slide to be visible
-    const transitionDuration = 600; // Must match the CSS transition duration in ms
+    // --- Konfigurasi ---
+    const transitionDuration = 500; // Durasi transisi dalam ms (sesuaikan dengan CSS jika ada)
 
-    // --- Setup Function ---
+    // Jumlah item yang di-clone di setiap sisi. Sebaiknya sama atau lebih dari jumlah item yang terlihat di layar besar (lg:basis-1/4 -> 4)
+    // Logika asli Anda meng-clone hingga 4 item, jadi kita akan gunakan angka tersebut untuk konsistensi.
+    const cloneCount = Math.min(originalItemCount, 4);
+
+    // Variabel untuk menyimpan index saat ini. Kita mulai dari item asli pertama.
+    let currentIndex = cloneCount;
+
+    // --- Fungsi Setup ---
     function setupCarousel() {
-        // 1. Clone items for the infinite loop illusion
-        const itemsToClone = items.slice(0, Math.min(originalItemCount, 4)); // Clone up to 4 items
-        itemsToClone.forEach(item => {
-            track.appendChild(item.cloneNode(true));
-        });
-
-        // Re-select items to include the new clones
-        items = Array.from(track.children);
-    }
-
-    // --- Core Slide Logic ---
-    function advanceSlide() {
-        currentIndex++;
-
-        // Enable transition for the slide
-        track.style.transition = `transform ${transitionDuration / 1000}s ease-in-out`;
-
-        // Calculate the new position
-        const itemWidth = items[0].getBoundingClientRect().width;
-        track.style.transform = `translateX(-${currentIndex * itemWidth}px)`;
-
-        // Check if we've reached the end (the start of the cloned items)
-        if (currentIndex >= originalItemCount) {
-            // After the transition finishes, reset to the beginning silently
-            setTimeout(() => {
-                track.style.transition = 'none'; // Disable transition for the jump
-                currentIndex = 0; // Reset index
-                track.style.transform = `translateX(0px)`;
-            }, transitionDuration);
+        if (originalItemCount <= cloneCount) {
+            // Jika item tidak cukup untuk di-clone, sembunyikan tombol dan hentikan eksekusi
+            prevButton.style.display = 'none';
+            nextButton.style.display = 'none';
+            return;
         }
+
+        // 1. Clone item dari akhir untuk diletakkan di awal
+        const itemsToPrepend = items.slice(-cloneCount).map(item => item.cloneNode(true));
+        track.prepend(...itemsToPrepend);
+
+        // 2. Clone item dari awal untuk diletakkan di akhir
+        const itemsToAppend = items.slice(0, cloneCount).map(item => item.cloneNode(true));
+        track.append(...itemsToAppend);
+
+        // 3. Update daftar 'items' untuk menyertakan semua kloningan
+        items = Array.from(track.children);
+
+        // 4. Posisikan carousel ke item asli pertama tanpa animasi
+        updatePosition(true); // 'true' untuk melompat tanpa transisi
     }
 
-    // --- Auto-play and Event Handling ---
-    function startAutoPlay() {
-        // Clear any existing interval to prevent duplicates
-        clearInterval(slideInterval);
-        slideInterval = setInterval(advanceSlide, slideDuration);
+    // --- Fungsi untuk mengupdate posisi track ---
+    function updatePosition(instant = false) {
+        // Cek dulu jika ada item di dalam track, untuk menghindari error saat kalkulasi lebar
+        if (items.length === 0) return;
+
+        const itemWidth = items[0].getBoundingClientRect().width;
+
+        // Nonaktifkan transisi jika ini adalah perpindahan instan (lompatan)
+        if (instant) {
+            track.style.transition = 'none';
+        } else {
+            track.style.transition = `transform ${transitionDuration / 1000}s ease-in-out`;
+        }
+
+        // Atur posisi transform berdasarkan index saat ini dan lebar item
+        track.style.transform = `translateX(-${currentIndex * itemWidth}px)`;
     }
 
-    function stopAutoPlay() {
-        clearInterval(slideInterval);
+    // --- Logika Inti Pergeseran ---
+    function moveToNext() {
+        if (isMoving) return; // Cegah klik ganda saat animasi berjalan
+        isMoving = true;
+
+        currentIndex++;
+        updatePosition();
     }
 
-    // Initialize the carousel
+    function moveToPrev() {
+        if (isMoving) return;
+        isMoving = true;
+
+        currentIndex--;
+        updatePosition();
+    }
+
+    // --- Penanganan Lompatan untuk Ilusi Infinite Loop ---
+    track.addEventListener('transitionend', () => {
+        // Cek jika kita berada di kloningan bagian akhir
+        // Indeks item asli terakhir adalah (originalItemCount + cloneCount - 1)
+        // Jadi, kloningan pertama di akhir berada pada indeks (originalItemCount + cloneCount)
+        if (currentIndex >= originalItemCount + cloneCount) {
+            currentIndex = cloneCount; // Lompat kembali ke item asli pertama
+            updatePosition(true); // Lakukan lompatan secara instan
+        }
+        // Cek jika kita berada di kloningan bagian awal
+        // Indeks item asli pertama adalah 'cloneCount'.
+        // Jadi, jika indeks kurang dari itu, kita berada di kloningan awal.
+        else if (currentIndex < cloneCount) {
+            // Kita lompat ke item asli terakhir. Indeksnya adalah (originalItemCount + cloneCount - 1)
+            currentIndex = originalItemCount + cloneCount - 1;
+            updatePosition(true); // Lakukan lompatan secara instan
+        }
+
+        isMoving = false; // Izinkan pergerakan lagi setelah transisi dan kemungkinan lompatan selesai
+    });
+
+    // --- Inisialisasi dan Event Listeners ---
     setupCarousel();
-    startAutoPlay();
+    nextButton.addEventListener('click', moveToNext);
+    prevButton.addEventListener('click', moveToPrev);
 
-    // Pause on hover for better user experience
-    viewport.addEventListener('mouseenter', stopAutoPlay);
-    viewport.addEventListener('mouseleave', startAutoPlay);
+    // Update posisi saat ukuran window berubah (penting untuk responsivitas)
+    window.addEventListener('resize', () => {
+        // Update posisi secara instan agar tidak ada animasi yang aneh saat resize
+        updatePosition(true);
+    });
 });
 
 document.addEventListener('DOMContentLoaded', () => {
