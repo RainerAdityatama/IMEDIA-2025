@@ -1,0 +1,22 @@
+body {
+            /* 2. Gunakan font 'Inter' di CSS */
+            font-family: 'Inter', sans-serif;
+        }
+
+        .carousel-track {
+            transition: transform 0.6s ease-in-out;
+        }
+
+        .card-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 1rem;
+            perspective: 1000px;
+            /* Efek 3D untuk kartu */
+            padding: 2rem 0;
+        }
+
+        .card {
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+        }

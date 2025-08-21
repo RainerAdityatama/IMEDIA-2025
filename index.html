@@ -1,0 +1,1136 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css"
+        integrity="sha512-DxV+EoADOkOygM4IR9yXP8Sb2qwgidEmeqAEmDKIOfPRQZOWbXCzLC6vjbZyy0vPisbH2SyW27+ddLVCN+OMzQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="icon" type="image/png" href="img/Logo Imedia 25.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <title>IMEDIA 2025</title>
+    <style>
+        /* CSS Kustom untuk Carousel yang Dinamis dan Elegan */
+        .carousel-viewport {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            overflow: hidden;
+            position: relative;
+            /* Menambahkan perspektif untuk efek 3D (opsional tapi bagus) */
+            perspective: 1000px;
+        }
+
+        .card-container {
+            display: flex;
+            /* Menambahkan gap untuk spasi antar kartu */
+            gap: 2rem;
+        }
+
+        .card {
+            /* Kalkulasi lebar yang presisi */
+            flex: 0 0 calc((100% - 4rem) / 3);
+            min-width: 0;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1), 0 6px 6px rgba(0, 0, 0, 0.1);
+
+            /* INI BAGIAN PENTING: Transisi yang Ditingkatkan */
+            /* Kita menganimasikan transform, opacity, dan filter secara terpisah */
+            transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out, filter 0.5s ease-in-out;
+
+            /* State default untuk kartu di samping */
+            transform: scale(0.85);
+            opacity: 0.6;
+            filter: blur(1px);
+        }
+
+        /* State untuk kartu yang aktif di tengah */
+        .card.is-center {
+            transform: scale(1);
+            /* Zoom ke ukuran normal */
+            opacity: 1;
+            /* Tampil penuh */
+            filter: blur(0);
+            /* Hilangkan blur */
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15), 0 10px 10px rgba(0, 0, 0, 0.1);
+            /* Bayangan lebih tegas */
+        }
+
+        /* [TETAP SAMA] CSS untuk menyembunyikan elemen sebelum animasi */
+        .elemen-animasi {
+            opacity: 0;
+        }
+
+        /* Penyesuaian untuk Tampilan Responsif Carousel di Section Creator */
+        @media (max-width: 1024px) {
+            .card {
+                flex: 0 0 calc((100% - 2rem) / 2);
+                /* Menampilkan 2 kartu di ukuran medium */
+            }
+        }
+
+        @media (max-width: 640px) {
+            .card-container {
+                gap: 1.5rem;
+            }
+
+            .card {
+                flex: 0 0 100%;
+                /* Menampilkan 1 kartu di ukuran small */
+                opacity: 0.8;
+                /* Sedikit lebih terlihat untuk konteks */
+            }
+
+            .card.is-center {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+
+<body class="bg-gray-200 h-auto">
+
+    <nav class="sticky top-0 z-50 bg-white shadow-md animate__animated animate__fadeInDown">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+
+                <div class="flex-shrink-0">
+                    <a href="#" class="text-2xl font-bold text-blue-500">
+                        <img class="w-30 h-15" src="img/Logo Imedia 25.png" alt="">
+                    </a>
+                </div>
+
+                <div class="hidden md:block -mb-4">
+                    <div class="ml-10 flex items-end space-x-12" id="nav-menu">
+
+                        <a href="#home"
+                            class="flex flex-col items-center text-sm font-semibold text-gray-900 border-b-4 border-gray-800 pb-2 transition-transform hover:scale-105">
+                            <img src="img/Home-01.svg" class="w-7 h-7 mb-1" alt="">
+                            <span>Halaman Utama</span>
+                        </a>
+
+                        <a href="#sejarah"
+                            class="flex flex-col items-center text-sm font-medium text-gray-900 hover:text-gray-800 transition-colors duration-200 border-b-4 border-transparent pb-2 transition-transform hover:scale-105">
+                            <img src="img/Sejarah-03.svg" class="w-7 h-7 mb-1" alt="">
+                            <span>Sejarah</span>
+                        </a>
+
+                        <a href="#denah"
+                            class="flex flex-col items-center text-sm font-medium text-gray-900 hover:text-gray-800 transition-colors duration-200 border-b-4 border-transparent pb-2 transition-transform hover:scale-105">
+                            <img src="img/Map-04-04.svg" class="w-7 h-7 mb-1" alt="">
+                            <span>Denah</span>
+                        </a>
+
+                        <a href="#galeri"
+                            class="flex flex-col items-center text-sm font-medium text-gray-900 hover:text-gray-800 transition-colors duration-200 border-b-4 border-transparent pb-2 transition-transform hover:scale-105">
+                            <img src="img/Galeri-02.svg" class="w-7 h-7 mb-1" alt="">
+                            <span>Galeri</span>
+                        </a>
+
+                        <a href="#creator"
+                            class="flex flex-col items-center text-sm font-medium text-gray-900 hover:text-gray-800 transition-colors duration-200 border-b-4 border-transparent pb-2 transition-transform hover:scale-105">
+                            <img src="img/Creator-05.svg" class="w-7 h-7 mb-1" alt="">
+                            <span>Creators</span>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div class="hidden md:block">
+                    <div class="ml-4 flex items-center md:ml-6">
+                        <img class="h-12 w-12 rounded-full" src="img/Head.png" alt="User Avatar">
+                    </div>
+                </div>
+
+                <div class="md:hidden flex items-center">
+                    <button id="hamburger-button" class="text-gray-900 hover:text-gray-800 focus:outline-none">
+                        <i class="fas fa-bars fa-xl"></i>
+                    </button>
+                </div>
+
+            </div>
+        </div>
+        <div id="mobile-menu" class="hidden md:hidden bg-white shadow-md">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <a href="#home"
+                    class="block px-3 py-2 rounded-md text-base font-medium text-gray-900 hover:bg-gray-100">Halaman
+                    Utama</a>
+                <a href="#sejarah"
+                    class="block px-3 py-2 rounded-md text-base font-medium text-gray-900 hover:bg-gray-100">Sejarah</a>
+                <a href="#denah"
+                    class="block px-3 py-2 rounded-md text-base font-medium text-gray-900 hover:bg-gray-100">Denah</a>
+                <a href="#galeri"
+                    class="block px-3 py-2 rounded-md text-base font-medium text-gray-900 hover:bg-gray-100">Galeri</a>
+                <a href="#creator"
+                    class="block px-3 py-2 rounded-md text-base font-medium text-gray-900 hover:bg-gray-100">Creators</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="font-poppins flex items-center justify-center min-h-screen overflow-hidden relative px-4 sm:px-0">
+
+        <div class="relative flex flex-col md:flex-row items-center md:items-start gap-6 max-w-7xl w-full p-1 page-section"
+            id="home">
+
+            <aside
+                class="w-full sm:w-80 md:w-60 flex-shrink-0 flex flex-col gap-4 animate__animated animate__fadeInLeft mt-8 md:mt-0">
+
+                <div class="rounded-xl shadow-md border border-slate-200 bg-white overflow-hidden">
+
+                    <div class="h-20 bg-[#0A65C1] relative">
+                        <img src="img/0001copy.png" alt="Penguin Peeking" class="absolute bottom-0 right-4 h-16">
+                    </div>
+
+                    <div class="text-start px-4 pb-5">
+                        <img src="img/0001copy2.png" alt="Profile Avatar"
+                            class="mb-0 ms-0 w-20 h-20 rounded-full mx-auto bg-[#0A65C1] -mt-11 relative z-10">
+
+                        <div class="mt-2 text-center">
+                            <h1 class="font-bold text-base text-slate-800">iMedia 2025</h1>
+                            <p class="text-xs text-slate-500 mt-1">Introduction of Multimedia</p>
+                            <p class="text-xs text-slate-500">South Jakarta, Jakarta</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="gap-4 px-2 bg-white rounded-xl p-2">
+                    <button class="bg-[#0A65C1] h-9 rounded-xl w-full"><a class="text-white" target="_blank"
+                            href="https://imedia2024.netlify.app">Previous Website</a></button>
+                </div>
+
+            </aside>
+
+            <main
+                class="w-full flex-grow h-[350px] sm:h-[450px] md:h-[550px] relative animate__animated animate__fadeInUp">
+
+                <div class="w-full md:w-210 h-full bg-[#eaf4ff] rounded-xl border border-slate-200 shadow-sm overflow-hidden"
+                    style="background-image: url(img/Group\ 160\ \(2\).png); background-size: cover; background-position: center;">
+
+                    <header class="bg-white flex items-center p-4 gap-3 border-b border-slate-200">
+                        <img src="img/Head.png" alt="Author Avatar"
+                            class="w-10 h-10 rounded-full border-2 p-1 border-blue-600">
+
+                        <div>
+                            <h2 class="font-bold text-sm text-slate-800">iMedia 2025</h2>
+                            <p class="text-xs text-slate-500">Introduction of Multimedia</p>
+                        </div>
+                    </header>
+                    <footer
+                        class="absolute bottom-0 left-0 w-full md:w-210 h-16 bg-white border-t border-slate-200 flex items-center rounded-b-xl">
+                        <div class="flex-1 flex justify-center items-center">
+                            <i
+                                class="fa-regular fa-thumbs-up text-xl text-slate-500 hover:text-blue-600 cursor-pointer"></i>
+                        </div>
+                        <div class="h-8 w-px bg-slate-200"></div>
+                        <div class="flex-1 flex justify-center items-center">
+                            <i
+                                class="fa-regular fa-bookmark text-xl text-slate-500 hover:text-blue-600 cursor-pointer"></i>
+                        </div>
+                    </footer>
+                </div>
+            </main>
+
+            <img src="img/0003.png" alt="Penguin Character"
+                class="hidden lg:block absolute w-[380px] z-20 bottom-35 right-[-40px] pointer-events-none animate__animated animate__fadeInRight">
+
+            <img src="img/Rock 002.png" alt="Penguin Character"
+                class="hidden lg:block absolute w-[380px] z-19 bottom-[-40px] right-[-20px] pointer-events-none animate__animated animate__fadeInRight">
+        </div>
+    </div>
+
+    <main
+        class="mt-8 md:mt-20 w-full px-4 md:px-0 md:ms-75 max-w-full md:max-w-[850px] mx-auto bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden flex flex-col page-section elemen-animasi"
+        id="sejarah" data-animasi="animate__slideInUp">
+
+        <header class="p-4 mb-0">
+            <div class="flex items-center gap-3">
+                <img src="img/Head.png" alt="Author Avatar" class="w-10 h-10 rounded-full border-2 p-1 border-blue-600">
+                <div>
+                    <h2 class="font-bold text-sm text-slate-800">iMedia 2025</h2>
+                    <p class="text-xs text-slate-500">Introduction of Multimedia</p>
+                </div>
+            </div>
+            <div class="mt-3">
+                <p class="text-sm text-slate-700 leading-relaxed">
+                    "Ayo kenalan sama Polimedia! 👋 Kampus vokasi yang fokus di bidang industri kreatif ini bukan cuma
+                    ngajarin teori, tapi juga langsung praktik. Dari desain, fotografi, sampai teknologi
+                    multimedia—semua bisa kamu eksplorasi di sini. Siap jadi kreator masa depan?"
+                    <br>
+                    <span class="text-blue-600 font-bold">#AyoKePolimedia</span>
+                    <span class="text-blue-600 font-bold">#KampusKreatif</span>
+                    <span class="text-blue-600 font-bold">#PolimediaJakarta</span>
+                </p>
+            </div>
+        </header>
+
+        <div>
+            <img src="img/Group 147 (2).png" alt="Konten Gambar Polimedia" class="w-full h-auto object-cover">
+        </div>
+
+        <footer class="h-16 flex items-center border-t border-slate-200">
+            <div class="flex-1 flex justify-center items-center">
+                <i class="fa-regular fa-thumbs-up text-xl text-slate-500 hover:text-blue-600 cursor-pointer"></i>
+            </div>
+            <div class="h-8 w-px bg-slate-200"></div>
+            <div class="flex-1 flex justify-center items-center">
+                <i class="fa-regular fa-bookmark text-xl text-slate-500 hover:text-blue-600 cursor-pointer"></i>
+            </div>
+        </footer>
+
+    </main>
+
+    <div class="page-section px-4 md:px-0" id="denah">
+        <main
+            class="mt-8 md:mt-20 w-full md:ms-75 max-w-full md:max-w-[850px] mx-auto bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden flex flex-col elemen-animasi"
+            data-animasi="animate__fadeInRight">
+            <header class="p-4 mb-0">
+                <div class="flex items-center gap-3">
+                    <img src="img/Head.png" alt="Author Avatar"
+                        class="w-10 h-10 rounded-full border-2 p-1 border-blue-600">
+                    <div>
+                        <h2 class="font-bold text-sm text-slate-800">iMedia 2025</h2>
+                        <p class="text-xs text-slate-500">Introduction of Multimedia</p>
+                    </div>
+                </div>
+                <div class="mt-3">
+                    <p class="text-sm text-slate-700 leading-relaxed">
+                        "Biar gak nyasar, kenalan dulu sama peta Polimedia! 🗺️ Dari gedung kuliah, studio, sampai
+                        kantin
+                        favorit mahasiswa—semuanya ada di sini. Yuk, jelajahi setiap sudut kampus kreatif kita! ✨
+                        #Polimedia
+                        #MapPolimedia #KampusKreatif"
+                        <br>
+                        <span class="text-blue-600 font-bold">#AyoKePolimedia</span>
+                        <span class="text-blue-600 font-bold">#KampusKreatif</span>
+                        <span class="text-blue-600 font-bold">#PolimediaJakarta</span>
+                    </p>
+                </div>
+            </header>
+            <div>
+                <img src="img/Group 151.png" alt="Konten Gambar Polimedia" class="w-full h-auto object-cover">
+            </div>
+            <footer class="h-16 flex items-center border-t border-slate-200">
+                <div class="flex-1 flex justify-center items-center">
+                    <i class="fa-regular fa-thumbs-up text-xl text-slate-500 hover:text-blue-600 cursor-pointer"></i>
+                </div>
+                <div class="h-8 w-px bg-slate-200"></div>
+                <div class="flex-1 flex justify-center items-center">
+                    <i class="fa-regular fa-bookmark text-xl text-slate-500 hover:text-blue-600 cursor-pointer"></i>
+                </div>
+            </footer>
+        </main>
+        <div class="font-poppins flex items-center justify-center min-h-screen overflow-hidden relative elemen-animasi"
+            data-animasi="animate__fadeInLeft">
+            <div class="relative flex flex-col md:flex-row items-center md:items-start gap-6 max-w-7xl w-full p-1">
+                <aside id="menu-gedung" class="w-full md:w-60 mt-8 md:mt-21 flex-shrink-0 flex flex-col gap-3">
+                    <a href="#" data-gedung="A"
+                        class="flex items-center gap-4 p-3 bg-[#0A65C1] text-white font-semibold rounded-xl shadow-md transition-transform hover:scale-105">
+                        <img src="img/gedung a,b,c 5.png" alt="Ikon Gedung A" class="w-12 h-10 object-contain">
+                        <span>Gedung A</span>
+                    </a>
+                    <a href="#" data-gedung="B"
+                        class="flex items-center gap-4 p-3 bg-white text-[#0A65C1] font-semibold rounded-xl shadow-md transition-transform hover:scale-105 hover:bg-slate-50">
+                        <img src="img/gedung a,b,c 5.png" alt="Ikon Gedung B" class="w-12 h-10 object-contain">
+                        <span>Gedung B</span>
+                    </a>
+                    <a href="#" data-gedung="C"
+                        class="flex items-center gap-4 p-3 bg-white text-[#0A65C1] font-semibold rounded-xl shadow-md transition-transform hover:scale-105 hover:bg-slate-50">
+                        <img src="img/gedung a,b,c 5.png" alt="Ikon Gedung C" class="w-12 h-10 object-contain">
+                        <span>Gedung C</span>
+                    </a>
+                    <a href="#" data-gedung="D"
+                        class="flex items-center gap-4 p-3 bg-white text-[#0A65C1] font-semibold rounded-xl shadow-md transition-transform hover:scale-105 hover:bg-slate-50">
+                        <img src="img/pusjiwa 1.png" alt="Ikon Gedung D" class="w-12 h-10 object-contain">
+                        <span>Gedung D</span>
+                    </a>
+                    <a href="#" data-gedung="E"
+                        class="flex items-center gap-4 p-3 bg-white text-[#0A65C1] font-semibold rounded-xl shadow-md transition-transform hover:scale-105 hover:bg-slate-50">
+                        <img src="img/tower 1.png" alt="Ikon Gedung E" class="w-12 h-10 object-contain">
+                        <span>Gedung E</span>
+                    </a>
+                </aside>
+                <main id="konten-utama"
+                    class="mt-4 md:mt-20 ms-0 w-full max-w-full md:max-w-[850px] mx-auto bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden flex flex-col transition-opacity duration-300 ease-in-out">
+                    <header class="p-4 mb-0">
+                        <div class="flex items-center gap-3">
+                            <img src="img/Head.png" alt="Author Avatar"
+                                class="w-10 h-10 rounded-full border-2 p-1 border-blue-600">
+                            <div>
+                                <h2 id="konten-judul-profil" class="font-bold text-sm text-slate-800">iMedia 2025</h2>
+                                <p class="text-xs text-slate-500">Introduction of Multimedia</p>
+                            </div>
+                        </div>
+                        <div class="mt-3">
+                            <p id="konten-paragraf" class="text-sm text-slate-700 leading-relaxed">
+                                "Setiap gedung di Polimedia punya cerita dan fungsinya sendiri. 🏢 Dari ruang kelas
+                                nyaman,
+                                lab komputer sampai area santai untuk diskusi—semuanya dirancang untuk mendukung ide dan
+                                karya kamu. Yuk, jelajahi fasilitas kampus kreatif kita! ✨"
+                                <br>
+                                <span id="konten-hashtag" class="text-blue-600 font-bold">#AyoKePolimedia
+                                    #KampusKreatif
+                                    #PolimediaJakarta</span>
+                            </p>
+                        </div>
+                    </header>
+                    <div>
+                        <img id="konten-gambar" src="img/Group 152 (2).png" alt="Konten Gambar Polimedia"
+                            class="w-full h-auto object-cover">
+                    </div>
+                    <footer class="h-16 flex items-center border-t border-slate-200">
+                        <div class="flex-1 flex justify-center items-center">
+                            <i
+                                class="fa-regular fa-thumbs-up text-xl text-slate-500 hover:text-blue-600 cursor-pointer"></i>
+                        </div>
+                        <div class="h-8 w-px bg-slate-200"></div>
+                        <div class="flex-1 flex justify-center items-center">
+                            <i
+                                class="fa-regular fa-bookmark text-xl text-slate-500 hover:text-blue-600 cursor-pointer"></i>
+                        </div>
+                    </footer>
+                </main>
+            </div>
+        </div>
+
+        <div class="mt-20 w-full page-section" id="galeri">
+            <h1 class="text-4xl sm:text-5xl md:text-6xl text-center mb-12 text-[#0A65C1] font-bold elemen-animasi"
+                data-animasi="animate__fadeInDown">Gallery
+            </h1>
+
+            <div id="carousel-viewport" class="w-full max-w-7xl mx-auto overflow-hidden elemen-animasi px-4 md:px-0"
+                data-animasi="animate__fadeInUp">
+
+                <div id="carousel-track" class="flex">
+
+                    <article class="basis-full sm:basis-1/2 lg:basis-1/4 flex-shrink-0 p-3">
+                        <div
+                            class="bg-white rounded-2xl shadow-md overflow-hidden flex flex-col h-full transition-transform hover:scale-105 hover:shadow-xl">
+                            <header class="p-4 flex items-center gap-3">
+                                <img src="img/Head.png" alt="Author Avatar"
+                                    class="w-10 h-10 rounded-full border-2 p-0.5 border-blue-600">
+                                <div>
+                                    <h2 class="font-bold text-sm text-slate-800">iMedia 2025</h2>
+                                    <p class="text-xs text-slate-500">Introduction of Multimedia</p>
+                                </div>
+                            </header>
+                            <img src="img/gallery/DSC00164 1.png" alt="Laptop with code"
+                                class="w-full h-48 object-cover">
+                            <footer class="mt-auto h-14 flex items-center border-t border-slate-200">
+                                <div class="flex-1 flex justify-center items-center">
+                                    <i
+                                        class="fa-regular fa-thumbs-up text-xl text-slate-500 hover:text-blue-600 cursor-pointer"></i>
+                                </div>
+                                <div class="h-8 w-px bg-slate-200"></div>
+                                <div class="flex-1 flex justify-center items-center">
+                                    <i
+                                        class="fa-regular fa-bookmark text-xl text-slate-500 hover:text-blue-600 cursor-pointer"></i>
+                                </div>
+                            </footer>
+                        </div>
+                    </article>
+
+                    <article class="basis-full sm:basis-1/2 lg:basis-1/4 flex-shrink-0 p-3">
+                        <div
+                            class="bg-white rounded-2xl shadow-md overflow-hidden flex flex-col h-full transition-transform hover:scale-105 hover:shadow-xl">
+                            <header class="p-4 flex items-center gap-3">
+                                <img src="img/Head.png" alt="Author Avatar"
+                                    class="w-10 h-10 rounded-full border-2 p-0.5 border-blue-600">
+                                <div>
+                                    <h2 class="font-bold text-sm text-slate-800">iMedia 2025</h2>
+                                    <p class="text-xs text-slate-500">Introduction of Multimedia</p>
+                                </div>
+                            </header>
+                            <img src="img/gallery/DSC00168 1.png" alt="Screen with code"
+                                class="w-full h-48 object-cover">
+                            <footer class="mt-auto h-14 flex items-center border-t border-slate-200">
+                                <div class="flex-1 flex justify-center items-center">
+                                    <i
+                                        class="fa-regular fa-thumbs-up text-xl text-slate-500 hover:text-blue-600 cursor-pointer"></i>
+                                </div>
+                                <div class="h-8 w-px bg-slate-200"></div>
+                                <div class="flex-1 flex justify-center items-center">
+                                    <i
+                                        class="fa-regular fa-bookmark text-xl text-slate-500 hover:text-blue-600 cursor-pointer"></i>
+                                </div>
+                            </footer>
+                        </div>
+                    </article>
+
+                    <article class="basis-full sm:basis-1/2 lg:basis-1/4 flex-shrink-0 p-3">
+                        <div
+                            class="bg-white rounded-2xl shadow-md overflow-hidden flex flex-col h-full transition-transform hover:scale-105 hover:shadow-xl">
+                            <header class="p-4 flex items-center gap-3">
+                                <img src="img/Head.png" alt="Author Avatar"
+                                    class="w-10 h-10 rounded-full border-2 p-0.5 border-blue-600">
+                                <div>
+                                    <h2 class="font-bold text-sm text-slate-800">iMedia 2025</h2>
+                                    <p class="text-xs text-slate-500">Introduction of Multimedia</p>
+                                </div>
+                            </header>
+                            <img src="img/gallery/DSC00172 1.png" alt="Overhead view of developer at desk"
+                                class="w-full h-48 object-cover">
+                            <footer class="mt-auto h-14 flex items-center border-t border-slate-200">
+                                <div class="flex-1 flex justify-center items-center">
+                                    <i
+                                        class="fa-regular fa-thumbs-up text-xl text-slate-500 hover:text-blue-600 cursor-pointer"></i>
+                                </div>
+                                <div class="h-8 w-px bg-slate-200"></div>
+                                <div class="flex-1 flex justify-center items-center">
+                                    <i
+                                        class="fa-regular fa-bookmark text-xl text-slate-500 hover:text-blue-600 cursor-pointer"></i>
+                                </div>
+                            </footer>
+                        </div>
+                    </article>
+
+                    <article class="basis-full sm:basis-1/2 lg:basis-1/4 flex-shrink-0 p-3">
+                        <div
+                            class="bg-white rounded-2xl shadow-md overflow-hidden flex flex-col h-full transition-transform hover:scale-105 hover:shadow-xl">
+                            <header class="p-4 flex items-center gap-3">
+                                <img src="img/Head.png" alt="Author Avatar"
+                                    class="w-10 h-10 rounded-full border-2 p-0.5 border-blue-600">
+                                <div>
+                                    <h2 class="font-bold text-sm text-slate-800">iMedia 2025</h2>
+                                    <p class="text-xs text-slate-500">Introduction of Multimedia</p>
+                                </div>
+                            </header>
+                            <img src="img/gallery/DSC00187 1.png" alt="Keyboard with RGB lighting"
+                                class="w-full h-48 object-cover">
+                            <footer class="mt-auto h-14 flex items-center border-t border-slate-200">
+                                <div class="flex-1 flex justify-center items-center">
+                                    <i
+                                        class="fa-regular fa-thumbs-up text-xl text-slate-500 hover:text-blue-600 cursor-pointer"></i>
+                                </div>
+                                <div class="h-8 w-px bg-slate-200"></div>
+                                <div class="flex-1 flex justify-center items-center">
+                                    <i
+                                        class="fa-regular fa-bookmark text-xl text-slate-500 hover:text-blue-600 cursor-pointer"></i>
+                                </div>
+                            </footer>
+                        </div>
+                    </article>
+
+                    <article class="basis-full sm:basis-1/2 lg:basis-1/4 flex-shrink-0 p-3">
+                        <div
+                            class="bg-white rounded-2xl shadow-md overflow-hidden flex flex-col h-full transition-transform hover:scale-105 hover:shadow-xl">
+                            <header class="p-4 flex items-center gap-3">
+                                <img src="img/Head.png" alt="Author Avatar"
+                                    class="w-10 h-10 rounded-full border-2 p-0.5 border-blue-600">
+                                <div>
+                                    <h2 class="font-bold text-sm text-slate-800">iMedia 2025</h2>
+                                    <p class="text-xs text-slate-500">Introduction of Multimedia</p>
+                                </div>
+                            </header>
+                            <img src="img/gallery/DSC00190 1.png" alt="Keyboard with RGB lighting"
+                                class="w-full h-48 object-cover">
+                            <footer class="mt-auto h-14 flex items-center border-t border-slate-200">
+                                <div class="flex-1 flex justify-center items-center">
+                                    <i
+                                        class="fa-regular fa-thumbs-up text-xl text-slate-500 hover:text-blue-600 cursor-pointer"></i>
+                                </div>
+                                <div class="h-8 w-px bg-slate-200"></div>
+                                <div class="flex-1 flex justify-center items-center">
+                                    <i
+                                        class="fa-regular fa-bookmark text-xl text-slate-500 hover:text-blue-600 cursor-pointer"></i>
+                                </div>
+                            </footer>
+                        </div>
+                    </article>
+
+                    <article class="basis-full sm:basis-1/2 lg:basis-1/4 flex-shrink-0 p-3">
+                        <div
+                            class="bg-white rounded-2xl shadow-md overflow-hidden flex flex-col h-full transition-transform hover:scale-105 hover:shadow-xl">
+                            <header class="p-4 flex items-center gap-3">
+                                <img src="img/Head.png" alt="Author Avatar"
+                                    class="w-10 h-10 rounded-full border-2 p-0.5 border-blue-600">
+                                <div>
+                                    <h2 class="font-bold text-sm text-slate-800">iMedia 2025</h2>
+                                    <p class="text-xs text-slate-500">Introduction of Multimedia</p>
+                                </div>
+                            </header>
+                            <img src="img/gallery/DSC00192 1.png" alt="Keyboard with RGB lighting"
+                                class="w-full h-48 object-cover">
+                            <footer class="mt-auto h-14 flex items-center border-t border-slate-200">
+                                <div class="flex-1 flex justify-center items-center">
+                                    <i
+                                        class="fa-regular fa-thumbs-up text-xl text-slate-500 hover:text-blue-600 cursor-pointer"></i>
+                                </div>
+                                <div class="h-8 w-px bg-slate-200"></div>
+                                <div class="flex-1 flex justify-center items-center">
+                                    <i
+                                        class="fa-regular fa-bookmark text-xl text-slate-500 hover:text-blue-600 cursor-pointer"></i>
+                                </div>
+                            </footer>
+                        </div>
+                    </article>
+
+                    <article class="basis-full sm:basis-1/2 lg:basis-1/4 flex-shrink-0 p-3">
+                        <div
+                            class="bg-white rounded-2xl shadow-md overflow-hidden flex flex-col h-full transition-transform hover:scale-105 hover:shadow-xl">
+                            <header class="p-4 flex items-center gap-3">
+                                <img src="img/Head.png" alt="Author Avatar"
+                                    class="w-10 h-10 rounded-full border-2 p-0.5 border-blue-600">
+                                <div>
+                                    <h2 class="font-bold text-sm text-slate-800">iMedia 2025</h2>
+                                    <p class="text-xs text-slate-500">Introduction of Multimedia</p>
+                                </div>
+                            </header>
+                            <img src="img/gallery/DSC00195 1.png" alt="Keyboard with RGB lighting"
+                                class="w-full h-48 object-cover">
+                            <footer class="mt-auto h-14 flex items-center border-t border-slate-200">
+                                <div class="flex-1 flex justify-center items-center">
+                                    <i
+                                        class="fa-regular fa-thumbs-up text-xl text-slate-500 hover:text-blue-600 cursor-pointer"></i>
+                                </div>
+                                <div class="h-8 w-px bg-slate-200"></div>
+                                <div class="flex-1 flex justify-center items-center">
+                                    <i
+                                        class="fa-regular fa-bookmark text-xl text-slate-500 hover:text-blue-600 cursor-pointer"></i>
+                                </div>
+                            </footer>
+                        </div>
+                    </article>
+
+                    <article class="basis-full sm:basis-1/2 lg:basis-1/4 flex-shrink-0 p-3">
+                        <div
+                            class="bg-white rounded-2xl shadow-md overflow-hidden flex flex-col h-full transition-transform hover:scale-105 hover:shadow-xl">
+                            <header class="p-4 flex items-center gap-3">
+                                <img src="img/Head.png" alt="Author Avatar"
+                                    class="w-10 h-10 rounded-full border-2 p-0.5 border-blue-600">
+                                <div>
+                                    <h2 class="font-bold text-sm text-slate-800">iMedia 2025</h2>
+                                    <p class="text-xs text-slate-500">Introduction of Multimedia</p>
+                                </div>
+                            </header>
+                            <img src="img/gallery/DSC00214 1.png" alt="Keyboard with RGB lighting"
+                                class="w-full h-48 object-cover">
+                            <footer class="mt-auto h-14 flex items-center border-t border-slate-200">
+                                <div class="flex-1 flex justify-center items-center">
+                                    <i
+                                        class="fa-regular fa-thumbs-up text-xl text-slate-500 hover:text-blue-600 cursor-pointer"></i>
+                                </div>
+                                <div class="h-8 w-px bg-slate-200"></div>
+                                <div class="flex-1 flex justify-center items-center">
+                                    <i
+                                        class="fa-regular fa-bookmark text-xl text-slate-500 hover:text-blue-600 cursor-pointer"></i>
+                                </div>
+                            </footer>
+                        </div>
+                    </article>
+
+                    <article class="basis-full sm:basis-1/2 lg:basis-1/4 flex-shrink-0 p-3">
+                        <div
+                            class="bg-white rounded-2xl shadow-md overflow-hidden flex flex-col h-full transition-transform hover:scale-105 hover:shadow-xl">
+                            <header class="p-4 flex items-center gap-3">
+                                <img src="img/Head.png" alt="Author Avatar"
+                                    class="w-10 h-10 rounded-full border-2 p-0.5 border-blue-600">
+                                <div>
+                                    <h2 class="font-bold text-sm text-slate-800">iMedia 2025</h2>
+                                    <p class="text-xs text-slate-500">Introduction of Multimedia</p>
+                                </div>
+                            </header>
+                            <img src="img/gallery/DSC00219 1.png" alt="Keyboard with RGB lighting"
+                                class="w-full h-48 object-cover">
+                            <footer class="mt-auto h-14 flex items-center border-t border-slate-200">
+                                <div class="flex-1 flex justify-center items-center">
+                                    <i
+                                        class="fa-regular fa-thumbs-up text-xl text-slate-500 hover:text-blue-600 cursor-pointer"></i>
+                                </div>
+                                <div class="h-8 w-px bg-slate-200"></div>
+                                <div class="flex-1 flex justify-center items-center">
+                                    <i
+                                        class="fa-regular fa-bookmark text-xl text-slate-500 hover:text-blue-600 cursor-pointer"></i>
+                                </div>
+                            </footer>
+                        </div>
+                    </article>
+
+                    <article class="basis-full sm:basis-1/2 lg:basis-1/4 flex-shrink-0 p-3">
+                        <div
+                            class="bg-white rounded-2xl shadow-md overflow-hidden flex flex-col h-full transition-transform hover:scale-105 hover:shadow-xl">
+                            <header class="p-4 flex items-center gap-3">
+                                <img src="img/Head.png" alt="Author Avatar"
+                                    class="w-10 h-10 rounded-full border-2 p-0.5 border-blue-600">
+                                <div>
+                                    <h2 class="font-bold text-sm text-slate-800">iMedia 2025</h2>
+                                    <p class="text-xs text-slate-500">Introduction of Multimedia</p>
+                                </div>
+                            </header>
+                            <img src="img/gallery/DSC00223 1.png" alt="Keyboard with RGB lighting"
+                                class="w-full h-48 object-cover">
+                            <footer class="mt-auto h-14 flex items-center border-t border-slate-200">
+                                <div class="flex-1 flex justify-center items-center">
+                                    <i
+                                        class="fa-regular fa-thumbs-up text-xl text-slate-500 hover:text-blue-600 cursor-pointer"></i>
+                                </div>
+                                <div class="h-8 w-px bg-slate-200"></div>
+                                <div class="flex-1 flex justify-center items-center">
+                                    <i
+                                        class="fa-regular fa-bookmark text-xl text-slate-500 hover:text-blue-600 cursor-pointer"></i>
+                                </div>
+                            </footer>
+                        </div>
+                    </article>
+
+                    <article class="basis-full sm:basis-1/2 lg:basis-1/4 flex-shrink-0 p-3">
+                        <div
+                            class="bg-white rounded-2xl shadow-md overflow-hidden flex flex-col h-full transition-transform hover:scale-105 hover:shadow-xl">
+                            <header class="p-4 flex items-center gap-3">
+                                <img src="img/Head.png" alt="Author Avatar"
+                                    class="w-10 h-10 rounded-full border-2 p-0.5 border-blue-600">
+                                <div>
+                                    <h2 class="font-bold text-sm text-slate-800">iMedia 2025</h2>
+                                    <p class="text-xs text-slate-500">Introduction of Multimedia</p>
+                                </div>
+                            </header>
+                            <img src="img/gallery/DSC00228 1.png" alt="Keyboard with RGB lighting"
+                                class="w-full h-48 object-cover">
+                            <footer class="mt-auto h-14 flex items-center border-t border-slate-200">
+                                <div class="flex-1 flex justify-center items-center">
+                                    <i
+                                        class="fa-regular fa-thumbs-up text-xl text-slate-500 hover:text-blue-600 cursor-pointer"></i>
+                                </div>
+                                <div class="h-8 w-px bg-slate-200"></div>
+                                <div class="flex-1 flex justify-center items-center">
+                                    <i
+                                        class="fa-regular fa-bookmark text-xl text-slate-500 hover:text-blue-600 cursor-pointer"></i>
+                                </div>
+                            </footer>
+                        </div>
+                    </article>
+
+                    <article class="basis-full sm:basis-1/2 lg:basis-1/4 flex-shrink-0 p-3">
+                        <div
+                            class="bg-white rounded-2xl shadow-md overflow-hidden flex flex-col h-full transition-transform hover:scale-105 hover:shadow-xl">
+                            <header class="p-4 flex items-center gap-3">
+                                <img src="img/Head.png" alt="Author Avatar"
+                                    class="w-10 h-10 rounded-full border-2 p-0.5 border-blue-600">
+                                <div>
+                                    <h2 class="font-bold text-sm text-slate-800">iMedia 2025</h2>
+                                    <p class="text-xs text-slate-500">Introduction of Multimedia</p>
+                                </div>
+                            </header>
+                            <img src="img/gallery/DSC00230 1.png" alt="Keyboard with RGB lighting"
+                                class="w-full h-48 object-cover">
+                            <footer class="mt-auto h-14 flex items-center border-t border-slate-200">
+                                <div class="flex-1 flex justify-center items-center">
+                                    <i
+                                        class="fa-regular fa-thumbs-up text-xl text-slate-500 hover:text-blue-600 cursor-pointer"></i>
+                                </div>
+                                <div class="h-8 w-px bg-slate-200"></div>
+                                <div class="flex-1 flex justify-center items-center">
+                                    <i
+                                        class="fa-regular fa-bookmark text-xl text-slate-500 hover:text-blue-600 cursor-pointer"></i>
+                                </div>
+                            </footer>
+                        </div>
+                    </article>
+
+                    <article class="basis-full sm:basis-1/2 lg:basis-1/4 flex-shrink-0 p-3">
+                        <div
+                            class="bg-white rounded-2xl shadow-md overflow-hidden flex flex-col h-full transition-transform hover:scale-105 hover:shadow-xl">
+                            <header class="p-4 flex items-center gap-3">
+                                <img src="img/Head.png" alt="Author Avatar"
+                                    class="w-10 h-10 rounded-full border-2 p-0.5 border-blue-600">
+                                <div>
+                                    <h2 class="font-bold text-sm text-slate-800">iMedia 2025</h2>
+                                    <p class="text-xs text-slate-500">Introduction of Multimedia</p>
+                                </div>
+                            </header>
+                            <img src="img/gallery/DSC00235 1.png" alt="Keyboard with RGB lighting"
+                                class="w-full h-48 object-cover">
+                            <footer class="mt-auto h-14 flex items-center border-t border-slate-200">
+                                <div class="flex-1 flex justify-center items-center">
+                                    <i
+                                        class="fa-regular fa-thumbs-up text-xl text-slate-500 hover:text-blue-600 cursor-pointer"></i>
+                                </div>
+                                <div class="h-8 w-px bg-slate-200"></div>
+                                <div class="flex-1 flex justify-center items-center">
+                                    <i
+                                        class="fa-regular fa-bookmark text-xl text-slate-500 hover:text-blue-600 cursor-pointer"></i>
+                                </div>
+                            </footer>
+                        </div>
+                    </article>
+
+                    <article class="basis-full sm:basis-1/2 lg:basis-1/4 flex-shrink-0 p-3">
+                        <div
+                            class="bg-white rounded-2xl shadow-md overflow-hidden flex flex-col h-full transition-transform hover:scale-105 hover:shadow-xl">
+                            <header class="p-4 flex items-center gap-3">
+                                <img src="img/Head.png" alt="Author Avatar"
+                                    class="w-10 h-10 rounded-full border-2 p-0.5 border-blue-600">
+                                <div>
+                                    <h2 class="font-bold text-sm text-slate-800">iMedia 2025</h2>
+                                    <p class="text-xs text-slate-500">Introduction of Multimedia</p>
+                                </div>
+                            </header>
+                            <img src="img/gallery/DSC00238 1.png" alt="Keyboard with RGB lighting"
+                                class="w-full h-48 object-cover">
+                            <footer class="mt-auto h-14 flex items-center border-t border-slate-200">
+                                <div class="flex-1 flex justify-center items-center">
+                                    <i
+                                        class="fa-regular fa-thumbs-up text-xl text-slate-500 hover:text-blue-600 cursor-pointer"></i>
+                                </div>
+                                <div class="h-8 w-px bg-slate-200"></div>
+                                <div class="flex-1 flex justify-center items-center">
+                                    <i
+                                        class="fa-regular fa-bookmark text-xl text-slate-500 hover:text-blue-600 cursor-pointer"></i>
+                                </div>
+                            </footer>
+                        </div>
+                    </article>
+
+                    <article class="basis-full sm:basis-1/2 lg:basis-1/4 flex-shrink-0 p-3">
+                        <div
+                            class="bg-white rounded-2xl shadow-md overflow-hidden flex flex-col h-full transition-transform hover:scale-105 hover:shadow-xl">
+                            <header class="p-4 flex items-center gap-3">
+                                <img src="img/Head.png" alt="Author Avatar"
+                                    class="w-10 h-10 rounded-full border-2 p-0.5 border-blue-600">
+                                <div>
+                                    <h2 class="font-bold text-sm text-slate-800">iMedia 2025</h2>
+                                    <p class="text-xs text-slate-500">Introduction of Multimedia</p>
+                                </div>
+                            </header>
+                            <img src="img/gallery/DSC00262 1.png" alt="Keyboard with RGB lighting"
+                                class="w-full h-48 object-cover">
+                            <footer class="mt-auto h-14 flex items-center border-t border-slate-200">
+                                <div class="flex-1 flex justify-center items-center">
+                                    <i
+                                        class="fa-regular fa-thumbs-up text-xl text-slate-500 hover:text-blue-600 cursor-pointer"></i>
+                                </div>
+                                <div class="h-8 w-px bg-slate-200"></div>
+                                <div class="flex-1 flex justify-center items-center">
+                                    <i
+                                        class="fa-regular fa-bookmark text-xl text-slate-500 hover:text-blue-600 cursor-pointer"></i>
+                                </div>
+                            </footer>
+                        </div>
+                    </article>
+
+                    <article class="basis-full sm:basis-1/2 lg:basis-1/4 flex-shrink-0 p-3">
+                        <div
+                            class="bg-white rounded-2xl shadow-md overflow-hidden flex flex-col h-full transition-transform hover:scale-105 hover:shadow-xl">
+                            <header class="p-4 flex items-center gap-3">
+                                <img src="img/Head.png" alt="Author Avatar"
+                                    class="w-10 h-10 rounded-full border-2 p-0.5 border-blue-600">
+                                <div>
+                                    <h2 class="font-bold text-sm text-slate-800">iMedia 2025</h2>
+                                    <p class="text-xs text-slate-500">Introduction of Multimedia</p>
+                                </div>
+                            </header>
+                            <img src="img/gallery/DSC00279 1.png" alt="Keyboard with RGB lighting"
+                                class="w-full h-48 object-cover">
+                            <footer class="mt-auto h-14 flex items-center border-t border-slate-200">
+                                <div class="flex-1 flex justify-center items-center">
+                                    <i
+                                        class="fa-regular fa-thumbs-up text-xl text-slate-500 hover:text-blue-600 cursor-pointer"></i>
+                                </div>
+                                <div class="h-8 w-px bg-slate-200"></div>
+                                <div class="flex-1 flex justify-center items-center">
+                                    <i
+                                        class="fa-regular fa-bookmark text-xl text-slate-500 hover:text-blue-600 cursor-pointer"></i>
+                                </div>
+                            </footer>
+                        </div>
+                    </article>
+
+                    <article class="basis-full sm:basis-1/2 lg:basis-1/4 flex-shrink-0 p-3">
+                        <div
+                            class="bg-white rounded-2xl shadow-md overflow-hidden flex flex-col h-full transition-transform hover:scale-105 hover:shadow-xl">
+                            <header class="p-4 flex items-center gap-3">
+                                <img src="img/Head.png" alt="Author Avatar"
+                                    class="w-10 h-10 rounded-full border-2 p-0.5 border-blue-600">
+                                <div>
+                                    <h2 class="font-bold text-sm text-slate-800">iMedia 2025</h2>
+                                    <p class="text-xs text-slate-500">Introduction of Multimedia</p>
+                                </div>
+                            </header>
+                            <img src="img/gallery/DSC00282 1.png" alt="Keyboard with RGB lighting"
+                                class="w-full h-48 object-cover">
+                            <footer class="mt-auto h-14 flex items-center border-t border-slate-200">
+                                <div class="flex-1 flex justify-center items-center">
+                                    <i
+                                        class="fa-regular fa-thumbs-up text-xl text-slate-500 hover:text-blue-600 cursor-pointer"></i>
+                                </div>
+                                <div class="h-8 w-px bg-slate-200"></div>
+                                <div class="flex-1 flex justify-center items-center">
+                                    <i
+                                        class="fa-regular fa-bookmark text-xl text-slate-500 hover:text-blue-600 cursor-pointer"></i>
+                                </div>
+                            </footer>
+                        </div>
+                    </article>
+
+                    <article class="basis-full sm:basis-1/2 lg:basis-1/4 flex-shrink-0 p-3">
+                        <div
+                            class="bg-white rounded-2xl shadow-md overflow-hidden flex flex-col h-full transition-transform hover:scale-105 hover:shadow-xl">
+                            <header class="p-4 flex items-center gap-3">
+                                <img src="img/Head.png" alt="Author Avatar"
+                                    class="w-10 h-10 rounded-full border-2 p-0.5 border-blue-600">
+                                <div>
+                                    <h2 class="font-bold text-sm text-slate-800">iMedia 2025</h2>
+                                    <p class="text-xs text-slate-500">Introduction of Multimedia</p>
+                                </div>
+                            </header>
+                            <img src="img/gallery/DSC00298 1.png" alt="Keyboard with RGB lighting"
+                                class="w-full h-48 object-cover">
+                            <footer class="mt-auto h-14 flex items-center border-t border-slate-200">
+                                <div class="flex-1 flex justify-center items-center">
+                                    <i
+                                        class="fa-regular fa-thumbs-up text-xl text-slate-500 hover:text-blue-600 cursor-pointer"></i>
+                                </div>
+                                <div class="h-8 w-px bg-slate-200"></div>
+                                <div class="flex-1 flex justify-center items-center">
+                                    <i
+                                        class="fa-regular fa-bookmark text-xl text-slate-500 hover:text-blue-600 cursor-pointer"></i>
+                                </div>
+                            </footer>
+                        </div>
+                    </article>
+
+                    <article class="basis-full sm:basis-1/2 lg:basis-1/4 flex-shrink-0 p-3">
+                        <div
+                            class="bg-white rounded-2xl shadow-md overflow-hidden flex flex-col h-full transition-transform hover:scale-105 hover:shadow-xl">
+                            <header class="p-4 flex items-center gap-3">
+                                <img src="img/Head.png" alt="Author Avatar"
+                                    class="w-10 h-10 rounded-full border-2 p-0.5 border-blue-600">
+                                <div>
+                                    <h2 class="font-bold text-sm text-slate-800">iMedia 2025</h2>
+                                    <p class="text-xs text-slate-500">Introduction of Multimedia</p>
+                                </div>
+                            </header>
+                            <img src="img/gallery/DSC00306 1.png" alt="Keyboard with RGB lighting"
+                                class="w-full h-48 object-cover">
+                            <footer class="mt-auto h-14 flex items-center border-t border-slate-200">
+                                <div class="flex-1 flex justify-center items-center">
+                                    <i
+                                        class="fa-regular fa-thumbs-up text-xl text-slate-500 hover:text-blue-600 cursor-pointer"></i>
+                                </div>
+                                <div class="h-8 w-px bg-slate-200"></div>
+                                <div class="flex-1 flex justify-center items-center">
+                                    <i
+                                        class="fa-regular fa-bookmark text-xl text-slate-500 hover:text-blue-600 cursor-pointer"></i>
+                                </div>
+                            </footer>
+                        </div>
+                    </article>
+
+                    <article class="basis-full sm:basis-1/2 lg:basis-1/4 flex-shrink-0 p-3">
+                        <div
+                            class="bg-white rounded-2xl shadow-md overflow-hidden flex flex-col h-full transition-transform hover:scale-105 hover:shadow-xl">
+                            <header class="p-4 flex items-center gap-3">
+                                <img src="img/Head.png" alt="Author Avatar"
+                                    class="w-10 h-10 rounded-full border-2 p-0.5 border-blue-600">
+                                <div>
+                                    <h2 class="font-bold text-sm text-slate-800">iMedia 2025</h2>
+                                    <p class="text-xs text-slate-500">Introduction of Multimedia</p>
+                                </div>
+                            </header>
+                            <img src="img/gallery/DSC00309 1.png" alt="Keyboard with RGB lighting"
+                                class="w-full h-48 object-cover">
+                            <footer class="mt-auto h-14 flex items-center border-t border-slate-200">
+                                <div class="flex-1 flex justify-center items-center">
+                                    <i
+                                        class="fa-regular fa-thumbs-up text-xl text-slate-500 hover:text-blue-600 cursor-pointer"></i>
+                                </div>
+                                <div class="h-8 w-px bg-slate-200"></div>
+                                <div class="flex-1 flex justify-center items-center">
+                                    <i
+                                        class="fa-regular fa-bookmark text-xl text-slate-500 hover:text-blue-600 cursor-pointer"></i>
+                                </div>
+                            </footer>
+                        </div>
+                    </article>
+
+                    <article class="basis-full sm:basis-1/2 lg:basis-1/4 flex-shrink-0 p-3">
+                        <div
+                            class="bg-white rounded-2xl shadow-md overflow-hidden flex flex-col h-full transition-transform hover:scale-105 hover:shadow-xl">
+                            <header class="p-4 flex items-center gap-3">
+                                <img src="img/Head.png" alt="Author Avatar"
+                                    class="w-10 h-10 rounded-full border-2 p-0.5 border-blue-600">
+                                <div>
+                                    <h2 class="font-bold text-sm text-slate-800">iMedia 2025</h2>
+                                    <p class="text-xs text-slate-500">Introduction of Multimedia</p>
+                                </div>
+                            </header>
+                            <img src="img/gallery/DSC00311 1.png" alt="Keyboard with RGB lighting"
+                                class="w-full h-48 object-cover">
+                            <footer class="mt-auto h-14 flex items-center border-t border-slate-200">
+                                <div class="flex-1 flex justify-center items-center">
+                                    <i
+                                        class="fa-regular fa-thumbs-up text-xl text-slate-500 hover:text-blue-600 cursor-pointer"></i>
+                                </div>
+                                <div class="h-8 w-px bg-slate-200"></div>
+                                <div class="flex-1 flex justify-center items-center">
+                                    <i
+                                        class="fa-regular fa-bookmark text-xl text-slate-500 hover:text-blue-600 cursor-pointer"></i>
+                                </div>
+                            </footer>
+                        </div>
+                    </article>
+
+                    <article class="basis-full sm:basis-1/2 lg:basis-1/4 flex-shrink-0 p-3">
+                        <div
+                            class="bg-white rounded-2xl shadow-md overflow-hidden flex flex-col h-full transition-transform hover:scale-105 hover:shadow-xl">
+                            <header class="p-4 flex items-center gap-3">
+                                <img src="img/Head.png" alt="Author Avatar"
+                                    class="w-10 h-10 rounded-full border-2 p-0.5 border-blue-600">
+                                <div>
+                                    <h2 class="font-bold text-sm text-slate-800">iMedia 2025</h2>
+                                    <p class="text-xs text-slate-500">Introduction of Multimedia</p>
+                                </div>
+                            </header>
+                            <img src="img/gallery/DSC00315 1.png" alt="Keyboard with RGB lighting"
+                                class="w-full h-48 object-cover">
+                            <footer class="mt-auto h-14 flex items-center border-t border-slate-200">
+                                <div class="flex-1 flex justify-center items-center">
+                                    <i
+                                        class="fa-regular fa-thumbs-up text-xl text-slate-500 hover:text-blue-600 cursor-pointer"></i>
+                                </div>
+                                <div class="h-8 w-px bg-slate-200"></div>
+                                <div class="flex-1 flex justify-center items-center">
+                                    <i
+                                        class="fa-regular fa-bookmark text-xl text-slate-500 hover:text-blue-600 cursor-pointer"></i>
+                                </div>
+                            </footer>
+                        </div>
+                    </article>
+
+                    <article class="basis-full sm:basis-1/2 lg:basis-1/4 flex-shrink-0 p-3">
+                        <div
+                            class="bg-white rounded-2xl shadow-md overflow-hidden flex flex-col h-full transition-transform hover:scale-105 hover:shadow-xl">
+                            <header class="p-4 flex items-center gap-3">
+                                <img src="img/Head.png" alt="Author Avatar"
+                                    class="w-10 h-10 rounded-full border-2 p-0.5 border-blue-600">
+                                <div>
+                                    <h2 class="font-bold text-sm text-slate-800">iMedia 2025</h2>
+                                    <p class="text-xs text-slate-500">Introduction of Multimedia</p>
+                                </div>
+                            </header>
+                            <img src="img/gallery/DSC00320 1.png" alt="Keyboard with RGB lighting"
+                                class="w-full h-48 object-cover">
+                            <footer class="mt-auto h-14 flex items-center border-t border-slate-200">
+                                <div class="flex-1 flex justify-center items-center">
+                                    <i
+                                        class="fa-regular fa-thumbs-up text-xl text-slate-500 hover:text-blue-600 cursor-pointer"></i>
+                                </div>
+                                <div class="h-8 w-px bg-slate-200"></div>
+                                <div class="flex-1 flex justify-center items-center">
+                                    <i
+                                        class="fa-regular fa-bookmark text-xl text-slate-500 hover:text-blue-600 cursor-pointer"></i>
+                                </div>
+                            </footer>
+                        </div>
+                    </article>
+
+                </div>
+            </div>
+        </div>
+
+        <main
+            class="w-full max-w-full md:max-w-[850px] mx-auto bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden flex flex-col mb-12 mt-20 page-section elemen-animasi px-4 md:px-0"
+            id="creator" data-animasi="animate__fadeInBottomLeft">
+
+            <header class="p-4 mb-0">
+                <div class="flex items-center gap-3">
+                    <img src="img/Head.png" alt="Author Avatar"
+                        class="w-10 h-10 rounded-full border-2 p-1 border-blue-600">
+                    <div>
+                        <h2 class="font-bold text-sm text-slate-800">iMedia 2025</h2>
+                        <p class="text-xs text-slate-500">Introduction of Multimedia</p>
+                    </div>
+                </div>
+                <div class="mt-3">
+                    <p class="text-sm text-slate-700 leading-relaxed">
+                        "Ayo kenalan sama Polimedia! 👋 Kampus vokasi yang fokus di bidang industri kreatif ini bukan
+                        cuma
+                        ngajarin teori, tapi juga langsung praktik. Dari desain, fotografi, sampai teknologi
+                        multimedia—semua bisa kamu eksplorasi di sini. Siap jadi kreator masa depan?"
+                        <br>
+                        <span class="text-blue-600 font-bold">#AyoKePolimedia</span>
+                        <span class="text-blue-600 font-bold">#KampusKreatif</span>
+                        <span class="text-blue-600 font-bold">#PolimediaJakarta</span>
+                    </p>
+                </div>
+            </header>
+
+            <div class="w-full py-10 px-2 relative overflow-hidden min-h-[450px] flex flex-col justify-center"
+                style="background-image: url(img/bg-behind\ \(1\).png);">
+                <h1 class="text-3xl sm:text-4xl md:text-5xl font-bold text-center text-[#0A65C1] mb-8">Behind The
+                    Website</h1>
+
+                <div class="carousel-viewport">
+                    <div class="card-container">
+                        <div class="card">
+                            <div class="bg-[#0A65C1] rounded-md p-1"><img src="img/behind/PUBDOK.png"
+                                    alt="Team Member 1" class="w-full h-auto rounded-sm block"></div>
+                        </div>
+                        <div class="card">
+                            <div class="bg-[#0A65C1] rounded-md p-1"><img src="img/behind/ACARA (1).png"
+                                    alt="Team Member 2" class="w-full h-auto rounded-sm block"></div>
+                        </div>
+                        <div class="card">
+                            <div class="bg-[#0A65C1] rounded-md p-1"><img src="img/behind/ACARA.png" alt="Team Member 3"
+                                    class="w-full h-auto rounded-sm block"></div>
+                        </div>
+                        <div class="card">
+                            <div class="bg-[#0A65C1] rounded-md p-1"><img src="img/behind/ACARA (2).png"
+                                    alt="Team Member 4" class="w-full h-auto rounded-sm block"></div>
+                        </div>
+                        <div class="card">
+                            <div class="bg-[#0A65C1] rounded-md p-1"><img src="img/behind/ACARA (3).png"
+                                    alt="Team Member 5" class="w-full h-auto rounded-sm block"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <footer class="h-16 flex items-center border-t border-slate-200">
+                <div class="flex-1 flex justify-center items-center">
+                    <i class="fa-regular fa-thumbs-up text-xl text-slate-500 hover:text-blue-600 cursor-pointer"></i>
+                </div>
+                <div class="h-8 w-px bg-slate-200"></div>
+                <div class="flex-1 flex justify-center items-center">
+                    <i class="fa-regular fa-bookmark text-xl text-slate-500 hover:text-blue-600 cursor-pointer"></i>
+                </div>
+            </footer>
+
+        </main>
+
+        <footer class="bg-[#0A65C1] text-white w-full">
+            <div class="container mx-auto px-4 py-5">
+                <div class="items-center text-center md:flex-row md:justify-between">
+
+                    <p class="text-sm mb-2 md:mb-0">
+                        Copyright © 2025 Imedia Co., Ltd. All Rights Reserved.
+                    </p>
+
+                    <p class="text-sm mt-1">
+                        Design: IMEDIA 2025
+                    </p>
+
+                </div>
+            </div>
+        </footer>
+
+        <script src="js/main.js"></script>
+
+        <script>
+            document.addEventListener('DOMContentLoaded', () => {
+                const hamburgerButton = document.getElementById('hamburger-button');
+                const mobileMenu = document.getElementById('mobile-menu');
+
+                hamburgerButton.addEventListener('click', () => {
+                    mobileMenu.classList.toggle('hidden');
+                });
+            });
+        </script>
+
+</body>
+
+</html>
