@@ -12,22 +12,22 @@ document.addEventListener('DOMContentLoaded', function () {
         B: {
             paragraf: "Selamat datang di Gedung B, pusat kreativitas dan inovasi. Di sini terdapat studio desain, lab fotografi, dan ruang pameran untuk menampilkan karya-karya terbaik mahasiswa.",
             hashtag: "#GedungB #StudioKreatif",
-            gambarUrl: "img/Group 153 (1).png" // Ganti dengan path gambar Anda
+            gambarUrl: "img/Group 153.png" // Ganti dengan path gambar Anda
         },
         C: {
             paragraf: "Gedung C merupakan pusat teknologi dan multimedia. Dengan laboratorium komputer canggih dan peralatan produksi audio-visual, mahasiswa bisa bereksplorasi dengan teknologi terkini.",
             hashtag: "#GedungC #LabMultimedia",
-            gambarUrl: "img/Group 154 (1).png" // Ganti dengan path gambar Anda
+            gambarUrl: "img/Group 154.png" // Ganti dengan path gambar Anda
         },
         D: {
             paragraf: "Ini adalah Gedung D, pusat kegiatan mahasiswa dan administrasi. Tempat yang tepat untuk berdiskusi, berorganisasi, dan mengurus berbagai keperluan administrasi kampus dan lain lain.",
             hashtag: "#GedungD #PusatMahasiswa",
-            gambarUrl: "img/Group 157 (1).png" // Ganti dengan path gambar Anda
+            gambarUrl: "img/Group 157.png" // Ganti dengan path gambar Anda
         },
         E: {
             paragraf: "Gedung E atau 'The Tower' adalah ikon baru kampus kami. Gedung serbaguna ini menjadi tempat seminar, workshop, dan berbagai acara besar lainnya yang inspiratif.",
             hashtag: "#GedungE #TheTower",
-            gambarUrl: "img/Group 156 (1).png" // Ganti dengan path gambar Anda
+            gambarUrl: "img/Group 156.png" // Ganti dengan path gambar Anda
         }
     };
 
