@@ -2,15 +2,14 @@
 
 Selamat datang di repositori IMEDIA-2025! Ini adalah proyek website yang dibuat untuk mendukung acara orientasi **Jurusan Multimedia** pada tahun 2025.
 
-Proyek ini dirancang untuk menjadi pusat informasi bagi para peserta, menyediakan semua detail yang diperlukan mulai dari jadwal acara, pendaftaran, hingga dokumentasi kegiatan.
+Proyek ini dirancang untuk menjadi pusat informasi bagi para peserta, mulai dari sejarah Polimedia, gedung gedung yang ada di polimedia, dan juga galeri yang berisi fasilitas apa saja yang ada di Polimedia
 
 ---
 
 ## 🚀 Fitur Utama
 
--   **🗓️ Informasi dan Jadwal Acara:** Menampilkan semua detail mengenai rangkaian acara orientasi.
--   **✍️ Pendaftaran Peserta:** Menyediakan fungsionalitas bagi peserta untuk mendaftar.
--   **🖼️ Galeri Dokumentasi:** Halaman untuk menampilkan foto atau video dari kegiatan yang telah berlangsung.
+-   **🗓️ Informasi dan Jadwal Acara:** Menampilkan semua detail informasi terkait dengan keperluan materi pada acaranya.
+-   **🖼️ Galeri Infrastruktur:** Halaman untuk menampilkan foto dari infrastruktur apa saja yang ada di Polimedia.
 -   **📱 Desain Responsif:** Tampilan yang dapat diakses dengan baik di berbagai perangkat, baik desktop maupun mobile.
 
 ---
@@ -23,22 +22,3 @@ Proyek ini dirancang untuk menjadi pusat informasi bagi para peserta, menyediaka
 -   **JavaScript**
 
 ---
-
-## ⚙️ Panduan Instalasi & Penggunaan
-
-Karena ini adalah proyek website statis, Anda tidak memerlukan instalasi yang rumit. Cukup ikuti langkah-langkah berikut:
-
-1.  **Clone Repositori**
-    ```bash
-    git clone [https://github.com/RainerAdityatama/IMEDIA-2025.git](https://github.com/RainerAdityatama/IMEDIA-2025.git)
-    ```
-
-2.  **Masuk ke Direktori Proyek**
-    ```bash
-    cd IMEDIA-2025
-    ```
-
-3.  **Buka File Utama**
-    Buka file `index.html` di browser pilihan Anda untuk melihat websitenya.
-
-Proyek akan langsung berjalan di browser Anda.
