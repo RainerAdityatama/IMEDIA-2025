@@ -20,5 +20,4 @@ Proyek ini dirancang untuk menjadi pusat informasi bagi para peserta, mulai dari
 -   **CSS3**
 -   **Tailwindcss**
 -   **JavaScript**
-
----
+  
